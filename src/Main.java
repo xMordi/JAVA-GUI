@@ -6,6 +6,7 @@ import java.awt.*;
 
 class MyGUI extends JFrame implements ActionListener {
     private JButton button;
+    private JButton resetButton;
     private JLabel label;
     private boolean isClicked = false; // Holder styr på knapp-tilstand
 
@@ -15,6 +16,7 @@ class MyGUI extends JFrame implements ActionListener {
 
         // Lag knapp og etikett med styling
         button = new JButton("Trykk meg!");
+        resetButton = new JButton("Resett");
         label = new JLabel("Hei, verden!");
 
         // Styling av label
@@ -22,7 +24,7 @@ class MyGUI extends JFrame implements ActionListener {
         label.setForeground(new Color(25, 25, 112)); // Mørk blå tekst
         label.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Styling av knapp
+        // Styling av hovedknapp
         button.setFont(new Font("Arial", Font.BOLD, 14));
         button.setBackground(new Color(70, 130, 180)); // Stålblå bakgrunn
         button.setForeground(Color.WHITE); // Hvit tekst
@@ -30,8 +32,17 @@ class MyGUI extends JFrame implements ActionListener {
         button.setBorder(BorderFactory.createRaisedBevelBorder()); // 3D-effekt
         button.setPreferredSize(new Dimension(150, 40));
 
-        // Koble knapp til action
+        // Styling av resett-knapp
+        resetButton.setFont(new Font("Arial", Font.BOLD, 12));
+        resetButton.setBackground(new Color(220, 20, 60)); // Rød bakgrunn
+        resetButton.setForeground(Color.WHITE); // Hvit tekst
+        resetButton.setFocusPainted(false);
+        resetButton.setBorder(BorderFactory.createRaisedBevelBorder());
+        resetButton.setPreferredSize(new Dimension(100, 35));
+
+        // Koble knapper til action
         button.addActionListener(this);
+        resetButton.addActionListener(this);
 
         // Sett bakgrunnsfarge på vinduet
         getContentPane().setBackground(new Color(240, 248, 255)); // Alice blue
@@ -40,9 +51,10 @@ class MyGUI extends JFrame implements ActionListener {
         setLayout(new FlowLayout(FlowLayout.CENTER, 20, 30));
         add(label);
         add(button);
+        add(resetButton);
 
         // Konfigurer vinduet
-        setSize(350, 200);
+        setSize(400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Sentrer vinduet på skjermen
         setVisible(true);
@@ -51,19 +63,32 @@ class MyGUI extends JFrame implements ActionListener {
     // Hva skjer når du klikker på knappen
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!isClicked) {
-            // Gå til "trykket" tilstand
-            label.setText("Du trykket på knappen!");
-            button.setText("Trykket!");
-            button.setBackground(new Color(60, 179, 113)); // Grønn farge
-            isClicked = true;
-        } else {
-            // Gå tilbake til original tilstand
-            label.setText("Hei, verden!");
-            button.setText("Trykk meg!");
-            button.setBackground(new Color(70, 130, 180)); // Stålblå bakgrunn
-            isClicked = false;
+        if (e.getSource() == resetButton) {
+            // Resett alt tilbake til original tilstand
+            resetToOriginal();
+        } else if (e.getSource() == button) {
+            if (!isClicked) {
+                // Gå til "trykket" tilstand
+                label.setText("Du trykket på knappen!");
+                button.setText("Trykket!");
+                button.setBackground(new Color(60, 179, 113)); // Grønn farge
+                isClicked = true;
+            } else {
+                // Gå tilbake til original tilstand
+                label.setText("Hei, verden!");
+                button.setText("Trykk meg!");
+                button.setBackground(new Color(70, 130, 180)); // Stålblå bakgrunn
+                isClicked = false;
+            }
         }
+    }
+
+    // Metode for å resette til original tilstand
+    private void resetToOriginal() {
+        label.setText("Hei, verden!");
+        button.setText("Trykk meg!");
+        button.setBackground(new Color(70, 130, 180)); // Stålblå bakgrunn
+        isClicked = false;
     }
 
     // main-metode
