@@ -25,12 +25,13 @@ class MyGUI extends JFrame implements ActionListener {
         label.setHorizontalAlignment(SwingConstants.CENTER);
 
         // Styling av hovedknapp
-        button.setFont(new Font("Arial", Font.BOLD, 14));
+        button.setFont(new Font("Verdana", Font.ITALIC, 18));
         button.setBackground(new Color(70, 130, 180)); // Stålblå bakgrunn
         button.setForeground(Color.WHITE); // Hvit tekst
         button.setFocusPainted(false); // Fjern fokus-ramme
-        button.setBorder(BorderFactory.createRaisedBevelBorder()); // 3D-effekt
+        button.setBorder(new javax.swing.border.LineBorder(new Color(70, 130, 180), 2, true)); // true gir runde hjørner
         button.setPreferredSize(new Dimension(150, 40));
+        button.setIcon(new ImageIcon("src/path/til/ikon.png"));
 
         // Styling av resett-knapp
         resetButton.setFont(new Font("Arial", Font.BOLD, 12));
@@ -58,6 +59,16 @@ class MyGUI extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Sentrer vinduet på skjermen
         setVisible(true);
+
+        // Add mouse listener for hover effect
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(100, 149, 237)); // Lysere blå
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(70, 130, 180)); // Original farge
+            }
+        });
     }
 
     // Hva skjer når du klikker på knappen
